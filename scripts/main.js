@@ -11,9 +11,20 @@
 // Math.floor()
 // Math.ceil()
 
-
 function between(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // const myNumber = between(0, 10);
+
+const firstNumber = between(0, 10);
+const secondNumber = between(0, 10);
+const multResult = prompt(
+  `What's the result? ${firstNumber} * ${secondNumber}`
+);
+
+if (firstNumber * secondNumber === parseInt(multResult)) {
+  alert("Correct result");
+} else {
+  alert("Incorrect result");
+}

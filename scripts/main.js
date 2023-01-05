@@ -17,14 +17,16 @@ function between(min, max) {
 
 // const myNumber = between(0, 10);
 
-const firstNumber = between(0, 10);
-const secondNumber = between(0, 10);
-const multResult = prompt(
-  `What's the result? ${firstNumber} * ${secondNumber}`
-);
-
-if (firstNumber * secondNumber === parseInt(multResult)) {
-  alert("Correct result");
-} else {
-  alert("Incorrect result");
+for (let i = 0; i < 10; i++) {
+  const firstNumber = between(0, 10);
+  const secondNumber = between(0, 10);
+  const multResult = prompt(
+    `What's the result? ${firstNumber} * ${secondNumber}`
+  );
 }
+
+// if (firstNumber * secondNumber === parseInt(multResult)) {
+//   alert("Correct result");
+// } else {
+//   alert("Incorrect result");
+// }

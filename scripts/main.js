@@ -18,25 +18,36 @@ function between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function isValueNumber(value) {
+  return isNaN(parseInt(value));
+}
+
 let correctAnswer = 0;
 let incorrectAnswer = 0;
-let isValueNumber;
-// const percentPassed = 50%;
+// let isValueNumber;
+let numberOfQuestions;
+const percentPassed = 0.5;
 
-for (let i = 0; i < 10; i++) {
+numberOfQuestions = prompt("How many questions?");
+
+if (!isValueNumber(numberOfQuestions)) {
+  process.exit();
+}
+
+for (let i = 0; i < numberOfQuestions; i++) {
   const firstNumber = between(0, 10);
   const secondNumber = between(0, 10);
 
   do {
     multResult = prompt(`What's the result? ${firstNumber} * ${secondNumber}`);
-    isValueNumber = isNaN(parseInt(multResult));
+    // isValueNumber = isNaN(parseInt(multResult));
 
     if (multResult === null) {
       alert("Thank you!");
       process.exit();
     }
 
-    if (isValueNumber && multResult !== null) {
+    if (isValueNumber(multResult) && multResult !== null) {
       alert("Value not a number");
     } else if (firstNumber * secondNumber === parseInt(multResult)) {
       {
@@ -45,19 +56,17 @@ for (let i = 0; i < 10; i++) {
     } else {
       incorrectAnswer = parseInt(incorrectAnswer) + 1;
     }
-  } while (isValueNumber && multResult !== null);
+  } while (isValueNumber(multResult) && multResult !== null);
 }
 
-if (correctAnswer >= 5) {
-  alert(`Test passed! ${correctAnswer} / ${correctAnswer + incorrectAnswer}`);
+if (correctAnswer / numberOfQuestions >= percentPassed) {
+  alert(`Test passed! ${correctAnswer} / ${numberOfQuestions}`);
 } else {
   alert(
-    `Test failed, score below 50%: ${correctAnswer} / ${
-      correctAnswer + incorrectAnswer
-    }`
+    `Test failed, score below 50%: ${correctAnswer} / ${numberOfQuestions}`
   );
 }
 
 console.log(correctAnswer);
 console.log(incorrectAnswer);
-console.log(`${(correctAnswer / (correctAnswer + incorrectAnswer)) * 100}%`);
+console.log(`${(correctAnswer / numberOfQuestions) * 100}%`);

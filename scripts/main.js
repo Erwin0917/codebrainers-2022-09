@@ -30,7 +30,7 @@ const percentPassed = 0.5;
 
 numberOfQuestions = prompt("How many questions?");
 
-if (!isValueNumber(numberOfQuestions)) {
+if (isValueNumber(numberOfQuestions)) {
   process.exit();
 }
 

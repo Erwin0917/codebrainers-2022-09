@@ -29,6 +29,7 @@ const exampleArray = [
     NaN
 ];
 
+
 function square(x) {
   return x * 2;
 }
@@ -49,4 +50,15 @@ const nextArray = exampleArray.filter(function (x){
 // nextArray.reverse();
 
 
-console.log('nextArray ', nextArray);
+// console.log('nextArray ', nextArray);
+
+
+const numbers = exampleArray.filter(function (x) {
+  if ( typeof x === 'number' && isNaN(x) === false) {
+    return true;
+    
+  }
+})
+
+const squaredNumbers = numbers.map(square);
+console.log(squaredNumbers)

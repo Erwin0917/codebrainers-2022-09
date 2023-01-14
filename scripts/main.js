@@ -23,11 +23,16 @@ console.log(availableNumbers)
 
 const randomNumbers = [];
 
+
 for (let i = 0; i < 6; i++){
-  randomNumbers.push(availableNumbers.splice(Math.floor(Math.random() * availableNumbers.length), 1)[0])
+  const ballIndex = Math.floor(Math.random() * availableNumbers.length)
+  const ballFromAvailableNumbers = availableNumbers.splice(ballIndex, 1)[0]
+  randomNumbers.push(ballFromAvailableNumbers)
 }
 
 console.log(randomNumbers)
+console.log(availableNumbers)
+
 
 
 const sixNumbers = [6, 15, 22, 41, 48, 30];

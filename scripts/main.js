@@ -61,4 +61,13 @@ const numbers = exampleArray.filter(function (x) {
 })
 
 const squaredNumbers = numbers.map(square);
-console.log(squaredNumbers)
+// console.log(squaredNumbers)
+
+const letterLongThree = exampleArray.filter(function(y) {
+  if (typeof y === "string" && y.length > 3){
+    return true
+  }
+
+}
+).reverse()
+console.log('string', letterLongThree)

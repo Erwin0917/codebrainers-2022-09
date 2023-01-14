@@ -9,24 +9,24 @@
 
 
 const exampleArray = [
-    'Emilia',
-    'Szymon',
-    'Adrian',
-    'Ola',
-    'Franek',
-    1,
-    33,
-    12,
-    undefined,
-    null,
-    [
-        'Warszawa', 'Kraków', 'Wrocław'
-    ],
-    {
-      name: 'Opel',
-      color: 'red'
-    },
-    NaN
+  'Emilia',
+  'Szymon',
+  'Adrian',
+  'Ola',
+  'Franek',
+  1,
+  33,
+  12,
+  undefined,
+  null,
+  [
+    'Warszawa', 'Kraków', 'Wrocław'
+  ],
+  {
+    name: 'Opel',
+    color: 'red'
+  },
+  NaN
 ];
 
 
@@ -41,8 +41,8 @@ const exampleArray = [
 const square = x => x * x;
 
 
-function squareIfNumber(x){
-    return typeof x === 'number' ? x * x : x;
+function squareIfNumber(x) {
+  return typeof x === 'number' ? x * x : x;
 }
 
 const fullArrayWithSquared = exampleArray.map(squareIfNumber);
@@ -52,12 +52,12 @@ console.log('fullArrayWithSquared ', fullArrayWithSquared);
 // exampleArray.forEach(square)
 
 function filterOutNonString(value) {
-    return typeof value === 'string';
+  return typeof value === 'string';
 
-    // if (typeof value === 'string') {
-    //     return true;
-    // }
-    // return false;
+  // if (typeof value === 'string') {
+  //     return true;
+  // }
+  // return false;
 }
 
 
@@ -72,20 +72,27 @@ const nextArray = exampleArray.filter(x => filterOutNonString(x)).reverse()
 
 
 const numbers = exampleArray.filter(function (x) {
-  if ( typeof x === 'number' && isNaN(x) === false) {
+  if (typeof x === 'number' && isNaN(x) === false) {
     return true;
-    
+
   }
 })
 
 const squaredNumbers = numbers.map(square);
 // console.log(squaredNumbers)
 
-const letterLongThree = exampleArray.filter(function(y) {
+const letterLongThree = exampleArray.filter(function (y) {
 
-  if (filterOutNonString(y) && y.length > 3){
+  if (filterOutNonString(y) && y.length > 3) {
     return true
   }
 
 }
 ).reverse()
+
+const filterOutObjects = (element) => {
+  return typeof element === 'object' && element !== null && !Array.isArray(element) ? true : false
+
+}
+const arrayOfObjects = exampleArray.filter(filterOutObjects)
+console.log('selement?', arrayOfObjects)

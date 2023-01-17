@@ -12,8 +12,11 @@ simpleObj.printName()
 class Car {
   constructor(color = 'blue', maxSpeed, numberOfGears) {
     this.color = color;
-    this.maxSpeed = maxSpeed === undefined ? 100 : maxSpeed;
-    this.numberOfGears = numberOfGears;
+    if (maxSpeed !== undefined && numberOfGears !== undefined && typeof maxSpeed === 'number' && typeof numberOfGears === 'number'){
+      this.maxSpeed = maxSpeed;
+      this.numberOfGears = numberOfGears;
+    }
+    this.speed = 0;
   }
 
   setPaint(color) {
@@ -24,7 +27,15 @@ class Car {
     return this.color;
   }
 
-  startEngine() {
+  setSpeed(speed) {
+
+  }
+
+  accelerate(howMuch) {
+
+  }
+
+  decelerate(howMuch) {
 
   }
 

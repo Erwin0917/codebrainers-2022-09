@@ -9,13 +9,22 @@ console.log('obj ', simpleObj.name);
 
 simpleObj.printName()
 
+
+const isCorectNumber = (value) => {
+ if (value !== undefined && value !== 0 && typeof value === 'number' ){
+  return true;
+ } 
+ return false;
+
+}
+
 class Car {
   constructor(color = 'blue', maxSpeed, numberOfGears, shouldBeDef ) {
     this.color = color;
     this.speed = 0;
     this.shouldBeDef = shouldBeDef;
 
-    if (numberOfGears !== undefined && numberOfGears !== 0 && typeof numberOfGears === 'number' ) {
+    if ( isCorectNumber(numberOfGears) ) {
       this.numberOfGears = numberOfGears;
       this.nDef = false;
     } else { 
@@ -23,7 +32,7 @@ class Car {
       this.nDef = true;
     }
     
-    if (maxSpeed !== undefined && maxSpeed !== 0 && typeof maxSpeed === 'number' ) {
+    if (isCorectNumber(maxSpeed) ) {
       this.maxSpeed = maxSpeed;
       this.sDef = false;
     } else {
@@ -56,7 +65,7 @@ class Car {
 
 }
 
-const car1 = new Car('red', 250, 4, false); //true
+const car1 = new Car('red', 50, 4, false); //true
 const car2 = new Car('black', '150', '8', false); //true
 const car3 = new Car('red', 'fast', 'one', true); //false
 const car4 = new Car('red', -20, -2, true); //false

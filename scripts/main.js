@@ -1,88 +1,131 @@
-const simpleObj = {
-  name: 'Antek',
-  printName: function () {
-    console.log('Justyna');
-  }
-}
+// const simpleObj = {
+//   name: "Antek",
+//   printName: function () {
+//     console.log("Justyna");
+//   },
+// };
 
-console.log('obj ', simpleObj.name);
+// console.log("obj ", simpleObj.name);
 
-simpleObj.printName()
+// simpleObj.printName();
 
+const isCorectNumber = (value) =>
+  value !== undefined && value > 0 && typeof value === "number" ? true : false;
 
-const isCorectNumber = (value) => {
- if (value !== undefined && value !== 0 && typeof value === 'number' ){
-  return true;
- } 
- return false;
-
-}
+const isCorrectColor = (color) =>
+  color !== null && typeof color !== "number" ? true : false;
 
 class Car {
-  constructor(color = 'blue', maxSpeed, numberOfGears, shouldBeDef ) {
-    this.color = color;
-    this.speed = 0;
-    this.shouldBeDef = shouldBeDef;
-
-    if ( isCorectNumber(numberOfGears) ) {
-      this.numberOfGears = numberOfGears;
-      this.nDef = false;
-    } else { 
-      this.numberOfGears = 6;
-      this.nDef = true;
-    }
-    
-    if (isCorectNumber(maxSpeed) ) {
-      this.maxSpeed = maxSpeed;
-      this.sDef = false;
+  constructor(color = "blue", maxSpeed, numberOfGears) {
+    if (isCorrectColor(color)) {
+      this.color = color;
     } else {
-      this.maxSpeed = 250;
-      this.sDef = true;
+      console.log("Color must be a string");
+      process.exit();
     }
 
-  }
-    
+    this.speed = 0;
 
-  setPaint(color) {
-    this.color = color;
+    if (isCorectNumber(maxSpeed) && maxSpeed <= 300) {
+      this.maxSpeed = maxSpeed;
+    } else {
+      console.log("Wrong data, maxSpeed set to 250", { maxSpeed });
+      this.maxSpeed = 250;
+    }
+
+    if (isCorectNumber(numberOfGears) && numberOfGears <= 6) {
+      this.numberOfGears = numberOfGears;
+    } else {
+      console.log("Wrong data, numberOfGears set to 6", { numberOfGears });
+      this.numberOfGears = 6;
+    }
   }
 
-  getColor() {
-    return this.color;
+  getColor(color) {
+    console.log(`Current color of car: ${this.color}`);
+  }
+
+  setColor(color) {
+    isCorrectColor(color)
+      ? console.log(`Color updated to ${(this.color = color)}`)
+      : console.log(
+          `Color not updated, must be a string, you entered: ${color}`
+        );
+  }
+
+  getSpeed(speed) {
+    console.log(`Current speed of car: ${this.speed}`);
   }
 
   setSpeed(speed) {
-    this.speed = speed;
+    isCorectNumber(speed) && speed <= 300
+      ? console.log(`Speed updated, current speed ${(this.speed = speed)}`)
+      : console.log(
+          `Speed not updated, must be a number and/or max Speed <=300, current speed ${this.speed}`
+        );
   }
 
-  accelerate(howMuch) {
-
+  getNumberOfGears(numberOfGears) {
+    console.log(`Current no of gears: ${this.numberOfGears}`);
   }
 
-  decelerate(howMuch) {
-
+  setNumberOfGears(numberOfGears) {
+    isCorectNumber(numberOfGears) && numberOfGears <= 6
+      ? console.log(
+          `No of gears updated, current no: ${(this.numberOfGears =
+            numberOfGears)}`
+        )
+      : console.log(
+          `No of gears not updated, must be a number, current no: ${this.numberOfGears}`
+        );
   }
 
+  setAccelerate(howMuch) {
+    isCorectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed
+      ? console.log(
+          `Speed updated, current speed ${(this.speed = this.speed + howMuch)}`
+        )
+      : console.log(`Speed not updated, current speed ${this.speed}`);
+  }
+
+  setDecelerate(howMuch) {
+    isCorectNumber(howMuch) && this.speed - howMuch >= 0
+      ? console.log(
+          `Speed updated, current speed ${(this.speed = this.speed - howMuch)}`
+        )
+      : console.log(`Speed not updated, current speed ${this.speed}`);
+  }
 }
 
-const car1 = new Car('red', 50, 4, false); //true
-const car2 = new Car('black', '150', '8', false); //true
-const car3 = new Car('red', 'fast', 'one', true); //false
-const car4 = new Car('red', -20, -2, true); //false
-
+const car1 = new Car("blue", 50, 4, false); //true
+const car2 = new Car("black", -150, "8", false); //true
+const car3 = new Car("red", 500, "one", true); //false
+const car4 = new Car("yellow", -20, -2, true); //false
 
 car3.setSpeed(500);
 car4.setSpeed(null);
-car2.accelerate(250);
-car3.accelerate('left');
+car2.setAccelerate(250);
+car3.setAccelerate("left");
 
 const cars = [car1, car2, car3, car4];
 
+console.log("cars ", cars);
 
-console.log('cars ', cars);
+console.log("car4: ", car4);
 
+car4.getColor();
+car4.setColor("violet");
+car4.getColor();
 
-// console.log('firstCar ', firstCar.color);
+car4.getSpeed();
+car4.setSpeed(100);
+car4.getSpeed();
 
-// secondCar.setPaint('black');
-// console.log('secondCar ', secondCar);
+car4.getNumberOfGears();
+car4.setNumberOfGears(10);
+car4.getNumberOfGears();
+
+car4.setAccelerate(50);
+car4.setDecelerate(90);
+
+console.log("car4: ", car4);

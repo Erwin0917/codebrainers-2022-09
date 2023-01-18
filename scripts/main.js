@@ -9,17 +9,6 @@
 
 // simpleObj.printName();
 
-// function isvalue(value) {
-//   if (typeof value === "string") {
-//     return parseInt(value);
-//   }
-//   if (value !== undefined && value > 0 && typeof value === "number") {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
 const isCorectNumber = function (value) {
   if (typeof value === "string") {
     // console.log("WAS STRING");
@@ -31,9 +20,6 @@ const isCorectNumber = function (value) {
     return false;
   }
 };
-
-// const isCorectNumber = (value) =>
-//   value !== undefined && value > 0 && typeof value === "number" ? true : false;
 
 const isCorrectColor = (color) =>
   color !== null && typeof color !== "number" ? true : false;
@@ -69,11 +55,14 @@ class Car {
   }
 
   setColor(color) {
-    isCorrectColor(color)
-      ? console.log(`Color updated to ${(this.color = color)}`)
-      : console.log(
-          `Color not updated, must be a string, you entered: ${color}`
-        );
+    if (isCorrectColor(color)) {
+      this.color = color;
+      console.log(`Color updated to ${this.color}`);
+    } else {
+      console.error(
+        `Color not updated, must be a string, you entered: ${color}`
+      );
+    }
   }
 
   getSpeed(speed) {
@@ -81,13 +70,14 @@ class Car {
   }
 
   setSpeed(speed) {
-    isCorectNumber(speed) && speed <= 300
-      ? console.log(
-          `Speed updated, current speed ${(this.speed = parseInt(speed))}`
-        )
-      : console.log(
-          `Speed not updated, must be a number and/or max Speed <=300, current speed ${this.speed}`
-        );
+    if (isCorectNumber(speed) && speed <= 300) {
+      this.speed = parseInt(speed);
+      console.log(`Speed updated, current speed ${this.speed}`);
+    } else {
+      console.error(
+        `Speed not updated, must be a number and/or max Speed <=300, current speed ${this.speed}`
+      );
+    }
   }
 
   getNumberOfGears(numberOfGears) {
@@ -95,32 +85,32 @@ class Car {
   }
 
   setNumberOfGears(numberOfGears) {
-    isCorectNumber(numberOfGears) && numberOfGears <= 6
-      ? console.log(
-          `No of gears updated, current no: ${(this.numberOfGears =
-            parseInt(numberOfGears))}`
-        )
-      : console.log(
-          `No of gears not updated, must be a number, current no: ${this.numberOfGears}`
-        );
+    if (isCorectNumber(numberOfGears) && numberOfGears <= 6) {
+      this.numberOfGears = parseInt(numberOfGears);
+      console.log(`No of gears updated, current no: ${this.numberOfGears}`);
+    } else {
+      console.error(
+        `No of gears not updated, must be a number and/or no of gears <=6, current no: ${this.numberOfGears}`
+      );
+    }
   }
 
   setAccelerate(howMuch) {
-    isCorectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed
-      ? console.log(
-          `Speed updated, current speed ${(this.speed =
-            this.speed + parseInt(howMuch))}`
-        )
-      : console.log(`Speed not updated, current speed ${this.speed}`);
+    if (isCorectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
+      this.speed = this.speed + parseInt(howMuch);
+      console.log(`Speed updated, current speed ${this.speed}`);
+    } else {
+      console.error(`Speed not updated, current speed ${this.speed}`);
+    }
   }
 
   setDecelerate(howMuch) {
-    isCorectNumber(howMuch) && this.speed - howMuch >= 0
-      ? console.log(
-          `Speed updated, current speed ${(this.speed =
-            this.speed - parseInt(howMuch))}`
-        )
-      : console.log(`Speed not updated, current speed ${this.speed}`);
+    if (isCorectNumber(howMuch) && this.speed - howMuch >= 0) {
+      this.speed = this.speed - parseInt(howMuch);
+      console.log(`Speed updated, current speed ${this.speed}`);
+    } else {
+      console.error(`Speed not updated, current speed ${this.speed}`);
+    }
   }
 }
 
@@ -130,7 +120,7 @@ const car3 = new Car("red", 500, "one", true); //false
 const car4 = new Car("yellow", -20, -2, true); //false
 
 // car3.setSpeed(500);
-// car4.setSpeed(null);
+// car4.setSpeed(100);
 // car2.setAccelerate(250);
 // car3.setAccelerate("left");
 
@@ -152,8 +142,11 @@ console.log("cars ", cars);
 // car4.setNumberOfGears(10);
 // car4.getNumberOfGears();
 
-// car4.setAccelerate(50);
+// car4.getSpeed();
+// car4.setAccelerate(5);
+// car4.getSpeed();
 // car4.setDecelerate(90);
+// car4.getSpeed();
 
 // console.log("car4: ", car4);
 // console.log("car1: ", car1);

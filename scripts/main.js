@@ -17,7 +17,7 @@ const isCorrectNumber = (value) => {
     return false;
 }
 
-const isCorrectIsString = (value) => {
+const ifNumberIsString = (value) => {
     if (value !== undefined && value > 0 && typeof value === 'string' && parseInt(value) !== null){
         return true;
     }
@@ -49,7 +49,7 @@ class Car {
     } else {
       this.numberOfGears = 6;
     }
-    if (isCorrectIsString(numberOfGears)){
+    if (ifNumberIsString(numberOfGears)){
         this.numberOfGears = parseInt(numberOfGears);
     }
 
@@ -58,7 +58,7 @@ class Car {
     } else {
       this.maxSpeed = 250;
     }
-    if (isCorrectIsString(maxSpeed)){
+    if (ifNumberIsString(maxSpeed)){
         this.maxSpeed = parseInt(maxSpeed);
     }
 
@@ -76,7 +76,7 @@ class Car {
   }
 
   setSpeed(speed) {
-    if (isCorrectNumber(speed) || isCorrectIsString(speed)){
+    if (isCorrectNumber(speed) || ifNumberIsString(speed)){
         this.speed = parseInt(speed);
         if (this.speed >= this.maxSpeed) this.speed = this.maxSpeed;
     }
@@ -84,7 +84,7 @@ class Car {
   
 
   accelerate(howMuch) {
-    if (isCorrectNumber(howMuch) || isCorrectIsString(howMuch)) {
+    if (isCorrectNumber(howMuch) || ifNumberIsString(howMuch)) {
         this.speed = this.speed + parseInt(howMuch);
         if (this.speed > this.maxSpeed) this.speed = this.maxSpeed;
     }
@@ -92,7 +92,7 @@ class Car {
   }
 
   decelerate(howMuch) {
-    if (isCorrectNumber(howMuch) || isCorrectIsString(howMuch)) {
+    if (isCorrectNumber(howMuch) || ifNumberIsString(howMuch)) {
         this.speed = this.speed - parseInt(howMuch);
         if (this.speed < 0) this.speed = 0;
     }

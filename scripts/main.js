@@ -1,88 +1,155 @@
-const simpleObj = {
-  name: 'Antek',
-  printName: function () {
-    console.log('Justyna');
-  }
-}
+// const simpleObj = {
+//   name: "Antek",
+//   printName: function () {
+//     console.log("Justyna");
+//   },
+// };
 
-console.log('obj ', simpleObj.name);
+// console.log("obj ", simpleObj.name);
 
-simpleObj.printName()
-
+// simpleObj.printName();
 
 const isCorectNumber = (value) => {
- if (value !== undefined && value !== 0 && typeof value === 'number' ){
-  return true;
- } 
- return false;
+  if (typeof value === "string") {
+    return true;
+  } else if (value !== undefined && value > 0 && typeof value === "number") {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-}
+const isCorrectColor = (color) =>
+  color !== null && typeof color !== "number" ? true : false;
 
 class Car {
-  constructor(color = 'blue', maxSpeed, numberOfGears, shouldBeDef ) {
-    this.color = color;
-    this.speed = 0;
-    this.shouldBeDef = shouldBeDef;
-
-    if ( isCorectNumber(numberOfGears) ) {
-      this.numberOfGears = numberOfGears;
-      this.nDef = false;
-    } else { 
-      this.numberOfGears = 6;
-      this.nDef = true;
-    }
-    
-    if (isCorectNumber(maxSpeed) ) {
-      this.maxSpeed = maxSpeed;
-      this.sDef = false;
+  constructor(color = "blue", maxSpeed, numberOfGears) {
+    if (isCorrectColor(color)) {
+      this.color = color;
     } else {
-      this.maxSpeed = 250;
-      this.sDef = true;
+      console.error("Color must be a string");
+      process.exit();
     }
 
-  }
-    
+    this.speed = 0;
 
-  setPaint(color) {
-    this.color = color;
+    if (isCorectNumber(maxSpeed) && maxSpeed <= 300) {
+      this.maxSpeed = parseInt(maxSpeed);
+    } else {
+      console.error("Wrong data, maxSpeed set to 250", { maxSpeed });
+      this.maxSpeed = 250;
+    }
+
+    if (isCorectNumber(numberOfGears) && numberOfGears <= 6) {
+      this.numberOfGears = parseInt(numberOfGears);
+    } else {
+      console.error("Wrong data, numberOfGears set to 6", { numberOfGears });
+      this.numberOfGears = 6;
+    }
   }
 
-  getColor() {
-    return this.color;
+  getColor(color) {
+    console.log(`Current color of car: ${this.color}`);
+  }
+
+  setColor(color) {
+    if (isCorrectColor(color)) {
+      this.color = color;
+      console.log(`Color updated to ${this.color}`);
+    } else {
+      console.error(
+        `Color not updated, must be a string, you entered: ${color}`
+      );
+    }
+  }
+
+  getSpeed(speed) {
+    console.log(`Current speed of car: ${this.speed}`);
   }
 
   setSpeed(speed) {
-    this.speed = speed;
+    if (isCorectNumber(speed) && speed <= this.maxSpeed && speed >= 0) {
+      this.speed = parseInt(speed);
+      console.log(`Speed updated, current speed ${this.speed}`);
+    } else {
+      console.error(
+        `Speed not updated, must be a number >=0 and/or <= max Speed, current speed ${this.speed}`
+      );
+    }
   }
 
-  accelerate(howMuch) {
+  getNumberOfGears(numberOfGears) {
+    console.log(`Current no of gears: ${this.numberOfGears}`);
+  }
 
+  setNumberOfGears(numberOfGears) {
+    if (isCorectNumber(numberOfGears) && numberOfGears <= 6) {
+      this.numberOfGears = parseInt(numberOfGears);
+      console.log(`No of gears updated, current no: ${this.numberOfGears}`);
+    } else {
+      console.error(
+        `No of gears not updated, must be a number and/or no of gears <=6, current no: ${this.numberOfGears}`
+      );
+    }
+  }
+  // this.speed +/- howMuch - do zmiennej, przyspieszamy do maxSpeed
+
+  accelerate(howMuch) {
+    if (isCorectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
+      this.speed = this.speed + parseInt(howMuch);
+      console.log(`Speed updated, current speed ${this.speed}`);
+    } else {
+      console.error(`Speed not updated, current speed ${this.speed}`);
+    }
   }
 
   decelerate(howMuch) {
-
+    if (isCorectNumber(howMuch) && this.speed - howMuch >= 0) {
+      this.speed = this.speed - parseInt(howMuch);
+      console.log(`Speed updated, current speed ${this.speed}`);
+    } else {
+      console.error(`Speed not updated, current speed ${this.speed}`);
+    }
   }
-
 }
 
-const car1 = new Car('red', 50, 4, false); //true
-const car2 = new Car('black', '150', '8', false); //true
-const car3 = new Car('red', 'fast', 'one', true); //false
-const car4 = new Car('red', -20, -2, true); //false
+const car1 = new Car("blue", "50", "4", false); //true
+const car2 = new Car("black", -150, "8", false); //true
+const car3 = new Car("red", 500, "one", true); //false
+const car4 = new Car("yellow", -20, -2, true); //false
 
-
-car3.setSpeed(500);
-car4.setSpeed(null);
-car2.accelerate(250);
-car3.accelerate('left');
+// car3.setSpeed(500);
+// car4.setSpeed(100);
+// car2.setAccelerate(250);
+// car3.setAccelerate("left");
 
 const cars = [car1, car2, car3, car4];
 
+console.log("cars ", cars);
 
-console.log('cars ', cars);
+// console.log("car4: ", car4);
 
+// car4.getColor();
+// car4.setColor("violet");
+// car4.getColor();
 
-// console.log('firstCar ', firstCar.color);
+// car4.getSpeed();
+// car4.setSpeed(100);
+// car4.getSpeed();
 
-// secondCar.setPaint('black');
-// console.log('secondCar ', secondCar);
+// car4.getNumberOfGears();
+// car4.setNumberOfGears(10);
+// car4.getNumberOfGears();
+
+// car4.getSpeed();
+// car4.setAccelerate(5);
+// car4.getSpeed();
+// car4.setDecelerate(90);
+// car4.getSpeed();
+
+// console.log("car4: ", car4);
+// console.log("car1: ", car1);
+// car1.setSpeed("70");
+// console.log("car1: ", car1);
+// car1.setNumberOfGears("3");
+// console.log("car1: ", car1);

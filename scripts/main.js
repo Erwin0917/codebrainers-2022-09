@@ -22,21 +22,16 @@ return typeof value === 'number' && isNaN(value) === false;
 
 const setNumericValue = (value, defaultValue) => {
   const parsedValue = parseInt(value);
-  if (isCorrectNumber(parsedValue)){
+  if (isCorrectNumber(parsedValue) && parsedValue > 0) {
     return parsedValue;
   }
   return defaultValue;
 }
 
-console.log(setNumericValue(2, 10))
-console.log(setNumericValue('2', 10))
-console.log(setNumericValue(undefined, 10))
-console.log(setNumericValue(NaN, 10))
-console.log(setNumericValue('qwe', 10))
 
+const isCorrectColor = color => typeof color !== "number" && color !== null; 
 
-const isCorrectColor = (color) =>
-  color !== null && typeof color !== "number" ? true : false;
+  
 
 class Car {
   constructor(color = "blue", maxSpeed, numberOfGears) {
@@ -50,21 +45,8 @@ class Car {
     this.speed = 0;
 
     this.maxSpeed = setNumericValue(maxSpeed, 250)
-    // if (isCorrectNumber(maxSpeed) && maxSpeed <= 300) {
-    //   this.maxSpeed = parseInt(maxSpeed);
-    // } else {
-    //   console.error("Wrong data, maxSpeed set to 250", { maxSpeed });
-    //   this.maxSpeed = 250;
-    // }
-
     this.numberOfGears = setNumericValue(numberOfGears, 6)
 
-    // if (isCorrectNumber(numberOfGears) && numberOfGears <= 6) {
-    //   this.numberOfGears = parseInt(numberOfGears);
-    // } else {
-    //   console.error("Wrong data, numberOfGears set to 6", { numberOfGears });
-    //   this.numberOfGears = 6;
-    // }
   }
 
   getColor(color) {
@@ -87,7 +69,7 @@ class Car {
   }
 
   setSpeed(speed) {
-    if (isCorectNumber(speed) && speed <= this.maxSpeed && speed >= 0) {
+    if (isCorrectNumber(speed) && speed <= this.maxSpeed && speed >= 0) {
       this.speed = parseInt(speed);
       console.log(`Speed updated, current speed ${this.speed}`);
     } else {
@@ -102,7 +84,7 @@ class Car {
   }
 
   setNumberOfGears(numberOfGears) {
-    if (isCorectNumber(numberOfGears) && numberOfGears <= 6) {
+    if (isCorrectNumber(numberOfGears) && numberOfGears <= 6) {
       this.numberOfGears = parseInt(numberOfGears);
       console.log(`No of gears updated, current no: ${this.numberOfGears}`);
     } else {
@@ -114,7 +96,7 @@ class Car {
   // this.speed +/- howMuch - do zmiennej, przyspieszamy do maxSpeed
 
   accelerate(howMuch) {
-    if (isCorectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
+    if (isCorrectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
       this.speed = this.speed + parseInt(howMuch);
       console.log(`Speed updated, current speed ${this.speed}`);
     } else {
@@ -123,7 +105,7 @@ class Car {
   }
 
   decelerate(howMuch) {
-    if (isCorectNumber(howMuch) && this.speed - howMuch >= 0) {
+    if (isCorrectNumber(howMuch) && this.speed - howMuch >= 0) {
       this.speed = this.speed - parseInt(howMuch);
       console.log(`Speed updated, current speed ${this.speed}`);
     } else {
@@ -144,31 +126,33 @@ const car4 = new Car("yellow", -20, -2, true); //false
 
 const cars = [car1, car2, car3, car4];
 
-//console.log("cars ", cars);
+// console.log("cars ", cars);
 
 // console.log("car4: ", car4);
 
-// car4.getColor();
-// car4.setColor("violet");
-// car4.getColor();
+car4.getColor();
+car4.setColor("violet");
+car4.getColor();
 
-// car4.getSpeed();
-// car4.setSpeed(100);
-// car4.getSpeed();
+car4.getSpeed();
+car4.setSpeed(100);
+car4.getSpeed();
 
-// car4.getNumberOfGears();
-// car4.setNumberOfGears(10);
-// car4.getNumberOfGears();
+car4.getNumberOfGears();
+car4.setNumberOfGears(10);
+car4.getNumberOfGears();
 
-// car4.getSpeed();
-// car4.setAccelerate(5);
-// car4.getSpeed();
-// car4.setDecelerate(90);
-// car4.getSpeed();
+car4.getSpeed();
+car4.accelerate(5);
+car4.getSpeed();
+car4.decelerate(90);
+car4.getSpeed();
 
-// console.log("car4: ", car4);
-// console.log("car1: ", car1);
-// car1.setSpeed("70");
-// console.log("car1: ", car1);
-// car1.setNumberOfGears("3");
-// console.log("car1: ", car1);
+console.log("car4: ", car4);
+console.log("car1: ", car1);
+car1.setSpeed("70");
+console.log("car1: ", car1);
+car1.setNumberOfGears("3");
+console.log("car1: ", car1);
+
+

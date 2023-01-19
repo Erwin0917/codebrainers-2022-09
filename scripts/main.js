@@ -1,23 +1,17 @@
-// const simpleObj = {
-//   name: "Antek",
-//   printName: function () {
-//     console.log("Justyna");
-//   },
-// };
 
-// console.log("obj ", simpleObj.name);
+//TODO: fix = car4.accelerate(5), car4.decelerate(200);
+// accelerate => if over maxSpeed set maxSpeed,
+// decelerate => if under 0 set 0
 
-// simpleObj.printName();
 
 const isCorrectNumber = (value) => {
   //true => value === number && value !== NaN
-//   if (typeof value === 'number' && isNaN(value) === false) {
-//     return true;
-//   }
-//   return false;
-// };
-return typeof value === 'number' && isNaN(value) === false;
-
+  //   if (typeof value === 'number' && isNaN(value) === false) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
+  return typeof value === 'number' && isNaN(value) === false;
 }
 
 const setNumericValue = (value, defaultValue) => {
@@ -38,12 +32,10 @@ class Car {
     if (isCorrectColor(color)) {
       this.color = color;
     } else {
-      console.error("Color must be a string");
-      process.exit();
+      throw new Error("Color must be a string")
     }
 
     this.speed = 0;
-
     this.maxSpeed = setNumericValue(maxSpeed, 250)
     this.numberOfGears = setNumericValue(numberOfGears, 6)
 
@@ -73,9 +65,7 @@ class Car {
       this.speed = parseInt(speed);
       console.log(`Speed updated, current speed ${this.speed}`);
     } else {
-      console.error(
-        `Speed not updated, must be a number >=0 and/or <= max Speed, current speed ${this.speed}`
-      );
+      throw new Error(`Speed not updated, must be a number >=0 and/or <= max Speed, current speed ${this.speed}`);
     }
   }
 
@@ -93,8 +83,6 @@ class Car {
       );
     }
   }
-  // this.speed +/- howMuch - do zmiennej, przyspieszamy do maxSpeed
-
   accelerate(howMuch) {
     if (isCorrectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
       this.speed = this.speed + parseInt(howMuch);
@@ -130,27 +118,30 @@ const cars = [car1, car2, car3, car4];
 
 // console.log("car4: ", car4);
 
-car4.getColor();
-car4.setColor("violet");
-car4.getColor();
-
+// car4.getColor();
+// car4.setColor("violet");
+// car4.getColor();
 car4.getSpeed();
 car4.setSpeed(100);
 car4.getSpeed();
+
+console.log('-'.repeat(20));
 
 car4.getNumberOfGears();
 car4.setNumberOfGears(10);
 car4.getNumberOfGears();
 
+console.log('-'.repeat(20));
+
 car4.getSpeed();
-car4.accelerate(5);
+car4.accelerate(155);
 car4.getSpeed();
-car4.decelerate(90);
+car4.decelerate(200);
 car4.getSpeed();
 
 console.log("car4: ", car4);
 console.log("car1: ", car1);
-car1.setSpeed("70");
+car1.accelerate("70");
 console.log("car1: ", car1);
 car1.setNumberOfGears("3");
 console.log("car1: ", car1);

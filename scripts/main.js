@@ -9,15 +9,31 @@
 
 // simpleObj.printName();
 
-const isCorectNumber = (value) => {
-  if (typeof value === "string") {
-    return true;
-  } else if (value !== undefined && value > 0 && typeof value === "number") {
-    return true;
-  } else {
-    return false;
+const isCorrectNumber = (value) => {
+  //true => value === number && value !== NaN
+//   if (typeof value === 'number' && isNaN(value) === false) {
+//     return true;
+//   }
+//   return false;
+// };
+return typeof value === 'number' && isNaN(value) === false;
+
+}
+
+const setNumericValue = (value, defaultValue) => {
+  const parsedValue = parseInt(value);
+  if (isCorrectNumber(parsedValue)){
+    return parsedValue;
   }
-};
+  return defaultValue;
+}
+
+console.log(setNumericValue(2, 10))
+console.log(setNumericValue('2', 10))
+console.log(setNumericValue(undefined, 10))
+console.log(setNumericValue(NaN, 10))
+console.log(setNumericValue('qwe', 10))
+
 
 const isCorrectColor = (color) =>
   color !== null && typeof color !== "number" ? true : false;
@@ -33,19 +49,22 @@ class Car {
 
     this.speed = 0;
 
-    if (isCorectNumber(maxSpeed) && maxSpeed <= 300) {
-      this.maxSpeed = parseInt(maxSpeed);
-    } else {
-      console.error("Wrong data, maxSpeed set to 250", { maxSpeed });
-      this.maxSpeed = 250;
-    }
+    this.maxSpeed = setNumericValue(maxSpeed, 250)
+    // if (isCorrectNumber(maxSpeed) && maxSpeed <= 300) {
+    //   this.maxSpeed = parseInt(maxSpeed);
+    // } else {
+    //   console.error("Wrong data, maxSpeed set to 250", { maxSpeed });
+    //   this.maxSpeed = 250;
+    // }
 
-    if (isCorectNumber(numberOfGears) && numberOfGears <= 6) {
-      this.numberOfGears = parseInt(numberOfGears);
-    } else {
-      console.error("Wrong data, numberOfGears set to 6", { numberOfGears });
-      this.numberOfGears = 6;
-    }
+    this.numberOfGears = setNumericValue(numberOfGears, 6)
+
+    // if (isCorrectNumber(numberOfGears) && numberOfGears <= 6) {
+    //   this.numberOfGears = parseInt(numberOfGears);
+    // } else {
+    //   console.error("Wrong data, numberOfGears set to 6", { numberOfGears });
+    //   this.numberOfGears = 6;
+    // }
   }
 
   getColor(color) {
@@ -125,7 +144,7 @@ const car4 = new Car("yellow", -20, -2, true); //false
 
 const cars = [car1, car2, car3, car4];
 
-console.log("cars ", cars);
+//console.log("cars ", cars);
 
 // console.log("car4: ", car4);
 

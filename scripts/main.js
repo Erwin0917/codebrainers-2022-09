@@ -62,7 +62,7 @@ class Car {
   setSpeed(speed) {
     if (setNumericValue(speed) <= this.maxSpeed){
         this.speed = parseInt(speed)
-        console.log(`New speek set to ${this.speed}`)
+        console.log(`New speed set to ${this.speed}`)
     } else {
         this.speed > this.maxSpeed
         console.log(`Speed set to max ${this.maxSpeed}`)

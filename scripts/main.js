@@ -36,8 +36,10 @@ class Criminal extends Character {
 
 const duel = (attacker, victim) => {
   do {
-    attacker.attack(victim);
-    if (victim.isAlive()) {
+    if (attacker.isAlive() && victim.isAlive()) {
+      attacker.attack(victim);
+    }
+    if (victim.isAlive() && attacker.isAlive()) {
       victim.attack(attacker);
     }
   } while (victim.isAlive() && attacker.isAlive());
@@ -48,8 +50,8 @@ const heroTeam = []
 const criminalTeam = []
 
 for (let i = 0; i < 5; i++) {
-  const hero = new Hero(between(80, 100), between(50,80));
-  const criminal = new Criminal(between(80,100), between(50,80));
+  const hero = new Hero(between(80, 100), between(50, 80));
+  const criminal = new Criminal(between(80, 100), between(50, 80));
   heroTeam.push(hero);
   criminalTeam.push(criminal);
 }
@@ -60,12 +62,16 @@ const isTeamDead = (team) => team.every(isMemberDead);
 
 do {
   heroTeam.forEach((heroInBattle, index) => {
-    console.log('+'.repeat(20))
-    const criminalInBattle = criminalTeam[index];
-    console.log(`criminalInBattle ${index}`, criminalInBattle);
-    console.log(`heroInBattle ${index}`, heroInBattle);
-    duel(heroInBattle, criminalInBattle);
-    console.log('-'.repeat(20))
+
+    let criminalInBattle = criminalTeam[index];
+    if (criminalInBattle.isAlive() === false) {
+      criminalInBattle = criminalTeam.find((person) => person.isAlive());
+    }
+    if (criminalInBattle !== undefined) {
+      duel(heroInBattle, criminalInBattle);
+    }
+
+
 
   })
 } while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false)

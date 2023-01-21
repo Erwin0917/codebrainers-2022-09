@@ -43,13 +43,34 @@ class Criminal extends Character {
 const hero = new Hero(100, 100);
 const criminal = new Criminal(90, 90);
 
-const duel = () => {
+const duel = (attacker, victim) => {
   do {
-    hero.attack(criminal);
-    if (criminal.isAlive()) {
-      criminal.attack(hero);
+    attacker.attack(victim);
+    
+    if (victim.isAlive()) {
+      victim.attack(attacker);
     }
-    console.log("criminal", criminal);
-    console.log("hero", hero);
-  } while (criminal.isAlive() && hero.isAlive());
-};
+    
+  } while (victim.isAlive() && attacker.isAlive());
+}
+
+
+const heroTeam = [] 
+
+const criminalTeam = []
+
+for (let i = 0; i<5; i++) {
+  const hero = new Hero(between(80, 100), between(50,80));
+  const criminal = new Criminal(between(80,100), between(50,80));
+  heroTeam.push(hero);
+  criminalTeam.push(criminal);
+}
+
+heroTeam.forEach((heroInBattle,index) => {
+   duel(heroInBattle,criminalTeam[index]);
+  
+})
+
+
+console.log(heroTeam);
+console.log(criminalTeam);

@@ -43,35 +43,40 @@ const duel = (attacker, victim) => {
       victim.attack(attacker);
     }
   } while (victim.isAlive() && attacker.isAlive());
-}
-
-
-const heroTeam = []
-const criminalTeam = []
-
-for (let i = 0; i < 5; i++) {
-  const hero = new Hero(between(80, 100), between(50, 80));
-  const criminal = new Criminal(between(80, 100), between(50, 80));
-  heroTeam.push(hero);
-  criminalTeam.push(criminal);
-}
+};
 
 const isMemberDead = (member) => member.isAlive() === false;
 const isTeamDead = (team) => team.every(isMemberDead);
 
+const drawTeams = (noOfTeamMembers, name) => {
+  const tempTeam = [];
+  for (let i = 0; i < noOfTeamMembers; i++) {
+    const member = new name(between(80, 100), between(50, 80));
+    tempTeam.push(member);
+  }
+  return tempTeam;
+};
 
-do {
-  heroTeam.forEach((heroInBattle, index) => {
+const battle = (noOfTeamMembers) => {
+  const heroTeam = drawTeams(noOfTeamMembers, Hero);
+  const criminalTeam = drawTeams(noOfTeamMembers, Criminal);
 
-    let criminalInBattle = criminalTeam[index];
-    if (criminalInBattle.isAlive() === false) {
-      criminalInBattle = criminalTeam.find((person) => person.isAlive());
-    }
-    if (criminalInBattle !== undefined) {
-      duel(heroInBattle, criminalInBattle);
-    }
-  })
-} while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false)
+  do {
+    heroTeam.forEach((heroInBattle, index) => {
+      let criminalInBattle = criminalTeam[index];
+      if (criminalInBattle.isAlive() === false) {
+        criminalInBattle = criminalTeam.find((person) => person.isAlive());
+      }
+      if (criminalInBattle !== undefined) {
+        const opponents = [heroInBattle, criminalInBattle].sort(
+          () => 0.5 - Math.random()
+        );
+        duel(opponents[0], opponents[1]);
+      }
+    });
+  } while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false);
+  console.log(heroTeam);
+  console.log(criminalTeam);
+};
 
-console.log(heroTeam);
-console.log(criminalTeam);
+battle(5);

@@ -66,11 +66,23 @@ for (let i = 0; i<5; i++) {
   criminalTeam.push(criminal);
 }
 
-heroTeam.forEach((heroInBattle,index) => {
-   duel(heroInBattle,criminalTeam[index]);
+// heroTeam.forEach((heroInBattle,index) => {
+//    duel(heroInBattle,criminalTeam[index]);
   
-})
+// })
 
+const isTeamDead = (team) => {
+  return team.every((teamMember) => {
+    return teamMember.isAlive()
+  })  
+}
+
+do {
+  heroTeam.forEach((heroInBattle,index) => {
+    duel(heroInBattle,criminalTeam[index])
+  })
+
+} while (isTeamDead(heroTeam) || isTeamDead(criminalTeam))
 
 console.log(heroTeam);
 console.log(criminalTeam);

@@ -1,37 +1,10 @@
-function between(min, max) {
+import { Weapon } from './Weapon.js';
+import { Criminal, Hero } from './Character.js';
+
+//TODO: Ustaw nową broń przy tworzeniu postaniu, wykorzystaj ją podczas walki.
+
+export function between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-class Character {
-  constructor(hitPoints, strength) {
-    this.hitPoints = hitPoints;
-    this.strength = strength;
-  }
-
-  isAlive() {
-    return this.hitPoints > 0;
-  }
-
-  attack(victim) {
-    if (victim instanceof Character) {
-      victim.hitPoints -= between(1, 100);
-      victim.strength -= between(1, 50);
-      return;
-    }
-    throw new Error(`(victim) not instance of Character`, victim);
-  }
-}
-
-class Hero extends Character {
-  constructor(hitPoints, strength) {
-    super(hitPoints, strength);
-  }
-}
-
-class Criminal extends Character {
-  constructor(hitPoints, strength) {
-    super(hitPoints, strength);
-  }
 }
 
 const duel = (attacker, victim) => {
@@ -51,7 +24,7 @@ const isTeamDead = (team) => team.every(isMemberDead);
 const drawTeams = (noOfTeamMembers, name) => {
   const tempTeam = [];
   for (let i = 0; i < noOfTeamMembers; i++) {
-    const member = new name(between(80, 100), between(50, 80));
+    const member = new name(between(120, 250), between(50, 80));
     tempTeam.push(member);
   }
   return tempTeam;
@@ -68,9 +41,7 @@ const battle = (noOfTeamMembers) => {
         criminalInBattle = criminalTeam.find((person) => person.isAlive());
       }
       if (criminalInBattle !== undefined) {
-        const opponents = [heroInBattle, criminalInBattle].sort(
-          () => 0.5 - Math.random()
-        );
+        const opponents = [heroInBattle, criminalInBattle].sort(() => 0.5 - Math.random());
         duel(opponents[0], opponents[1]);
       }
     });

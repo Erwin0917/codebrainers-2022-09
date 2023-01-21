@@ -3,38 +3,37 @@ class Person {
     this.hitPoints = hitPoints;
   }
 
+
+
+}
+
+class Character {
+  constructor(hitPoints, strength) {
+    this.hitPoints = hitPoints
+    this.strength = strength;
+  }
+
   isAlive() {
     return this.hitPoints > 0;
   }
 
-}
+  attack() {
 
-class Character extends Person {
-  constructor(hitPoints) {
-    super(hitPoints);
-
-    this.strength = 20;
   }
 
-  // isAlive() {
-  //   return super.isAlive() && this.strength > 0;
-  // }
-
 }
 
-
-class Vehicle {
-
+class Hero extends Character {
+  constructor(hitPoints, strength) {
+    super(hitPoints, strength);
+  }
 }
 
+class Criminal extends Character {
+  constructor(hitPoints, strength) {
+    super(hitPoints, strength);
+  }
+}
 
-const firstChar = new Character(100);
-const vehicle = new Vehicle();
-
-firstChar.isAlive()
-
-console.log(firstChar instanceof Character);
-console.log(firstChar instanceof Person);
-console.log(firstChar instanceof Vehicle);
 
 

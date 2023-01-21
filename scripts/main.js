@@ -84,18 +84,28 @@ class Car {
     }
   }
   accelerate(howMuch) {
-    if (isCorrectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
-      this.speed = this.speed + parseInt(howMuch);
-      console.log(`Speed updated, current speed ${this.speed}`);
+    const newSpeed = parseInt(howMuch) + this.speed;
+    if ( isCorrectNumber(newSpeed) === false){
+      return
+    }
+    if ( newSpeed <= this.maxSpeed){
+        this.speed = newSpeed;
+        console.log(`Accelerate to ${this.speed}`)
     } else {
       console.error(`Speed not updated, current speed ${this.speed}`);
     }
   }
 
   decelerate(howMuch) {
-    if (isCorrectNumber(howMuch) && this.speed - howMuch >= 0) {
-      this.speed = this.speed - parseInt(howMuch);
-      console.log(`Speed updated, current speed ${this.speed}`);
+    console.log('howMuch', howMuch)
+    const newSpeed = this.speed - parseInt(howMuch);
+    console.log('newSpeed', newSpeed)
+    if ( isCorrectNumber(newSpeed) === false){
+      return
+    }
+    if ( newSpeed >= 0){
+        this.speed = newSpeed;
+        console.log(`Decelerate to ${this.speed}`)
     } else {
       console.error(`Speed not updated, current speed ${this.speed}`);
     }

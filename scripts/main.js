@@ -23,12 +23,12 @@ const setNumericValue = (value, defaultValue) => {
 }
 
 
-const isCorrectColor = color => typeof color !== "number" && color !== null; 
+const isCorrectColor = color => typeof color !== "number" && color !== null;
 
-  
+
 
 class Car {
-  constructor(color = "blue", maxSpeed, numberOfGears) {
+  constructor(color = "blue", maxSpeed, minSpeed, numberOfGears) {
     if (isCorrectColor(color)) {
       this.color = color;
     } else {
@@ -37,6 +37,7 @@ class Car {
 
     this.speed = 0;
     this.maxSpeed = setNumericValue(maxSpeed, 250)
+    this.minSpeed = setNumericValue(minSpeed, 0)
     this.numberOfGears = setNumericValue(numberOfGears, 6)
 
   }
@@ -61,8 +62,8 @@ class Car {
   }
 
   setSpeed(speed) {
-    if (isCorrectNumber(speed) && speed <= this.maxSpeed && speed >= 0) {
-      this.speed = parseInt(speed);
+    if (isCorrectNumber(speed) && speed <= this.maxSpeed && speed >= this.minSpeed) {
+      this.speed = speed;
       console.log(`Speed updated, current speed ${this.speed}`);
     } else {
       throw new Error(`Speed not updated, must be a number >=0 and/or <= max Speed, current speed ${this.speed}`);
@@ -83,22 +84,33 @@ class Car {
       );
     }
   }
-  accelerate(howMuch) {
-    if (isCorrectNumber(howMuch) && this.speed + howMuch <= this.maxSpeed) {
-      this.speed = this.speed + parseInt(howMuch);
+
+  // const accelerate = (fasterSpeed, maxSpeed) => {
+  //   const pushesIntoTheChair = this.speed;
+  //   pushesIntoTheChair = this.speed + fasterSpeed;
+  //   if (isCorrectNumber(this.speed) && isCorrectNumber(fasterSpeed) && this.speed + fasterSpeed <= 250) {
+  //     return pushesIntoTheChair;
+  //   } else if {
+  //   (this.speed + fasterSpeed >= 250);
+  //   return maxSpeed;
+  // }
+
+  accelerate(fasterSpeed) {
+    if (isCorrectNumber(this.speed) && isCorrectNumber(fasterSpeed) && this.speed + fasterSpeed <= 250) {
+      this.speed = this.speed + fasterSpeed;
       console.log(`Speed updated, current speed ${this.speed}`);
-    } else {
-      console.error(`Speed not updated, current speed ${this.speed}`);
-    }
+    } else if (this.speed + fasterSpeed >= 250)
+      this.speed = this.maxSpeed;
+    console.log(`Speed updated, current speed ${this.speed}`);
   }
 
-  decelerate(howMuch) {
-    if (isCorrectNumber(howMuch) && this.speed - howMuch >= 0) {
-      this.speed = this.speed - parseInt(howMuch);
+  decelerate(slowerSpeed) {
+    if (isCorrectNumber(this.speed) && isCorrectNumber(slowerSpeed) && this.speed - slowerSpeed >= 0) {
+      this.speed = this.speed - slowerSpeed;
       console.log(`Speed updated, current speed ${this.speed}`);
-    } else {
-      console.error(`Speed not updated, current speed ${this.speed}`);
-    }
+    } else if (this.speed - slowerSpeed <= 0)
+      this.speed = this.minSpeed;
+    console.log(`Speed updated, current speed ${this.speed}`);
   }
 }
 
@@ -134,14 +146,14 @@ car4.getNumberOfGears();
 console.log('-'.repeat(20));
 
 car4.getSpeed();
-car4.accelerate(155);
+car4.accelerate('60');
 car4.getSpeed();
 car4.decelerate(200);
 car4.getSpeed();
 
 console.log("car4: ", car4);
 console.log("car1: ", car1);
-car1.accelerate("70");
+car1.accelerate(70);
 console.log("car1: ", car1);
 car1.setNumberOfGears("3");
 console.log("car1: ", car1);

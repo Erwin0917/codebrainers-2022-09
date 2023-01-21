@@ -70,9 +70,6 @@ do {
     if (criminalInBattle !== undefined) {
       duel(heroInBattle, criminalInBattle);
     }
-
-
-
   })
 } while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false)
 

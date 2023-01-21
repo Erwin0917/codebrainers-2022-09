@@ -82,8 +82,12 @@ class Car {
         }
   }
   accelerate(howMuch) {
-    if (this.speed + setNumericValue(howMuch) <= this.maxSpeed){
-        this.speed = this.speed + setNumericValue(howMuch);
+    const newSpeed = parseInt(howMuch) + this.speed;
+    if ( isCorrectNumber(newSpeed) === false){
+      return
+    }
+    if ( newSpeed <= this.maxSpeed){
+        this.speed = newSpeed;
         console.log(`Accelerate to ${this.speed}`)
     } else {
         this.speed = this.maxSpeed;
@@ -92,8 +96,14 @@ class Car {
   }
 
   decelerate(howMuch) {
-    if (this.speed - setNumericValue(howMuch) >= 0){
-        this.speed = this.speed - setNumericValue(howMuch);
+    console.log('howMuch', howMuch)
+    const newSpeed = this.speed - parseInt(howMuch);
+    console.log('newSpeed', newSpeed)
+    if ( isCorrectNumber(newSpeed) === false){
+      return
+    }
+    if ( newSpeed >= 0){
+        this.speed = newSpeed;
         console.log(`Decelerate to ${this.speed}`)
     } else {
         this.speed = 0;

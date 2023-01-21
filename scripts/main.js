@@ -2,12 +2,6 @@ function between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-class Person {
-  constructor(hitPoints) {
-    this.hitPoints = hitPoints;
-  }
-}
-
 class Character {
   constructor(hitPoints, strength) {
     this.hitPoints = hitPoints;
@@ -40,49 +34,41 @@ class Criminal extends Character {
   }
 }
 
-const hero = new Hero(100, 100);
-const criminal = new Criminal(90, 90);
-
 const duel = (attacker, victim) => {
   do {
     attacker.attack(victim);
-    
     if (victim.isAlive()) {
       victim.attack(attacker);
     }
-    
   } while (victim.isAlive() && attacker.isAlive());
 }
 
 
-const heroTeam = [] 
-
+const heroTeam = []
 const criminalTeam = []
 
-for (let i = 0; i<5; i++) {
+for (let i = 0; i < 5; i++) {
   const hero = new Hero(between(80, 100), between(50,80));
   const criminal = new Criminal(between(80,100), between(50,80));
   heroTeam.push(hero);
   criminalTeam.push(criminal);
 }
 
-// heroTeam.forEach((heroInBattle,index) => {
-//    duel(heroInBattle,criminalTeam[index]);
-  
-// })
+const isMemberDead = (member) => member.isAlive() === false;
+const isTeamDead = (team) => team.every(isMemberDead);
 
-const isTeamDead = (team) => {
-  return team.every((teamMember) => {
-    return teamMember.isAlive()
-  })  
-}
 
 do {
-  heroTeam.forEach((heroInBattle,index) => {
-    duel(heroInBattle,criminalTeam[index])
-  })
+  heroTeam.forEach((heroInBattle, index) => {
+    console.log('+'.repeat(20))
+    const criminalInBattle = criminalTeam[index];
+    console.log(`criminalInBattle ${index}`, criminalInBattle);
+    console.log(`heroInBattle ${index}`, heroInBattle);
+    duel(heroInBattle, criminalInBattle);
+    console.log('-'.repeat(20))
 
-} while (isTeamDead(heroTeam) || isTeamDead(criminalTeam))
+  })
+} while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false)
 
 console.log(heroTeam);
 console.log(criminalTeam);

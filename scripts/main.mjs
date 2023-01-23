@@ -1,5 +1,5 @@
-import { Weapon } from './Weapon.js';
-import { Criminal, Hero } from './Character.js';
+import { Weapon, weaponsList } from './Weapon.mjs';
+import { Criminal, Hero } from './Character.mjs';
 
 //TODO: Ustaw nową broń przy tworzeniu postaniu, wykorzystaj ją podczas walki.
 
@@ -24,7 +24,7 @@ const isTeamDead = (team) => team.every(isMemberDead);
 const drawTeams = (noOfTeamMembers, name) => {
   const tempTeam = [];
   for (let i = 0; i < noOfTeamMembers; i++) {
-    const member = new name(between(120, 250), between(50, 80));
+    const member = new name(between(80, 100), between(1, 10));
     tempTeam.push(member);
   }
   return tempTeam;
@@ -33,6 +33,8 @@ const drawTeams = (noOfTeamMembers, name) => {
 const battle = (noOfTeamMembers) => {
   const heroTeam = drawTeams(noOfTeamMembers, Hero);
   const criminalTeam = drawTeams(noOfTeamMembers, Criminal);
+  console.log("heroTeam before", heroTeam);
+  console.log("criminalTeam Before", criminalTeam);
 
   do {
     heroTeam.forEach((heroInBattle, index) => {
@@ -46,8 +48,8 @@ const battle = (noOfTeamMembers) => {
       }
     });
   } while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false);
-  console.log(heroTeam);
-  console.log(criminalTeam);
+  console.log("heroTeam after", heroTeam);
+  console.log("criminalTeam after", criminalTeam);
 };
 
 battle(5);

@@ -61,4 +61,21 @@ const battle = (noOfTeamMembers) => {
   console.log(criminalTeam);
 };
 
-battle(noTeamMembers);
+const search = document.querySelector('#search');
+search.addEventListener('change', (event) => {
+  console.log('event ', event);
+  // event.target.value
+  console.log('event.target.value ', event.target.value);
+});
+
+const newText = 'abc'
+document.querySelector('.someOtherClass').innerHTML = `
+    <h1>${newText}</h1>
+    <span></span>
+`
+
+// battle(noTeamMembers);
+
+
+
+

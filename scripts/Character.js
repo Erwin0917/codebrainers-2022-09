@@ -20,9 +20,14 @@ class Character {
         this.weapon !== null
           ? this.weapon.getDamage() * (this.strength / 10)
           : defaultDamage;
-
-      victim.hitPoints -= currentDamage;
-      victim.strength -= between(1, 50);
+      console.log('currentDemage', currentDamage)
+      victim.hitPoints = victim.hitPoints - currentDamage;
+      const newVictimStrenth = victim.strength - between(1, 50)
+      //victim.strength = newVictimStrenth < 1 ?  1 : newVictimStrenth;
+      victim.strength = 
+        newVictimStrenth < 1 
+          ?  1 
+          : newVictimStrenth;
 
       return;
     }

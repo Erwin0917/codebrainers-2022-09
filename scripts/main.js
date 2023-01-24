@@ -43,7 +43,6 @@ const drawTeams = (noOfTeamMembers, name) => {
 const battle = (noOfTeamMembers) => {
   const heroTeam = drawTeams(noOfTeamMembers, Hero);
   const criminalTeam = drawTeams(noOfTeamMembers, Criminal);
-
   do {
     heroTeam.forEach((heroInBattle, index) => {
       let criminalInBattle = criminalTeam[index];

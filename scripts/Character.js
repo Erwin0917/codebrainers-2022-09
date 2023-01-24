@@ -1,9 +1,9 @@
-import { Weapon, weaponsList } from './Weapon.mjs';
-import { between } from './main.mjs';
+import { weaponsList } from './Weapon.js';
+import { between } from './main.js';
 
 
 class Character {
-  constructor(hitPoints, strength, attackPower) {
+  constructor(hitPoints, strength) {
     this.hitPoints = hitPoints;
     this.strength = strength;
     this.attackPower = strength + weaponsList[between(0, weaponsList.length - 1)].weaponPower;

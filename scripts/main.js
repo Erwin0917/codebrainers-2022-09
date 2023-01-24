@@ -1,5 +1,4 @@
-import { Weapon, weaponsList } from './Weapon.mjs';
-import { Criminal, Hero } from './Character.mjs';
+import { Criminal, Hero } from './Character.js';
 
 //TODO: Ustaw nową broń przy tworzeniu postaniu, wykorzystaj ją podczas walki.
 

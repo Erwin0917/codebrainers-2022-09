@@ -1,5 +1,12 @@
-import { Weapon } from './Weapon.js';
-import { Criminal, Hero } from './Character.js';
+import { Criminal, Hero } from "./Character.js";
+import { Weapon, weaponDraw } from "./Weapon.js";
+
+const noTeamMembers = 5;
+
+const minMaxHP = {
+  minHP: between(120, 250),
+  maxHP: between(50, 80),
+};
 
 //TODO: Ustaw nową broń przy tworzeniu postaniu, wykorzystaj ją podczas walki.
 
@@ -24,7 +31,10 @@ const isTeamDead = (team) => team.every(isMemberDead);
 const drawTeams = (noOfTeamMembers, name) => {
   const tempTeam = [];
   for (let i = 0; i < noOfTeamMembers; i++) {
-    const member = new name(between(120, 250), between(50, 80));
+    const member = new name(minMaxHP.minHP, minMaxHP.maxHP);
+    const weapon = weaponDraw();
+    console.log("weapon", weapon);
+    member.setWeapon(weapon);
     tempTeam.push(member);
   }
   return tempTeam;
@@ -41,7 +51,9 @@ const battle = (noOfTeamMembers) => {
         criminalInBattle = criminalTeam.find((person) => person.isAlive());
       }
       if (criminalInBattle !== undefined) {
-        const opponents = [heroInBattle, criminalInBattle].sort(() => 0.5 - Math.random());
+        const opponents = [heroInBattle, criminalInBattle].sort(
+          () => 0.5 - Math.random()
+        );
         duel(opponents[0], opponents[1]);
       }
     });
@@ -50,4 +62,4 @@ const battle = (noOfTeamMembers) => {
   console.log(criminalTeam);
 };
 
-battle(5);
+battle(noTeamMembers);

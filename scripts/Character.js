@@ -1,10 +1,11 @@
-import { Weapon } from './Weapon.js';
-import { between } from './main.js';
+import { Weapon } from "./Weapon.js";
+import { between } from "./main.js";
 
 class Character {
   constructor(hitPoints, strength) {
     this.hitPoints = hitPoints;
     this.strength = strength;
+    this.weapon = null;
   }
 
   isAlive() {
@@ -13,8 +14,16 @@ class Character {
 
   attack(victim) {
     if (victim instanceof Character) {
-      victim.hitPoints -= between(1, 100);
+      const defaultDamage = 5;
+
+      const currentDamage =
+        this.weapon !== null
+          ? this.weapon.getDamage() * (this.strength / 10)
+          : defaultDamage;
+
+      victim.hitPoints -= currentDamage;
       victim.strength -= between(1, 50);
+
       return;
     }
     throw new Error(`(victim) not instance of Character`, victim);
@@ -22,11 +31,9 @@ class Character {
 
   setWeapon(weapon) {
     if (!(weapon instanceof Weapon)) {
-      throw new Error('weapon should be instance of Weapon class');
+      throw new Error("Weapon should be instance of Weapon class");
     }
-
     this.weapon = weapon;
-
   }
 }
 

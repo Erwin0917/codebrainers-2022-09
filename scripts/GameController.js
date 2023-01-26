@@ -31,7 +31,6 @@ class GameControlPanel {
         this.nameInput = this.gamePanel.querySelector('#name');
 
         this.randomPersonButton = this.gamePanel.querySelector('#randomPerson');
-
-
+        this.startBattleButton = this.gamePanel.querySelector('#startBattle')
     }
 }

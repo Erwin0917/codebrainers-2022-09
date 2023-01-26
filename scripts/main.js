@@ -62,16 +62,23 @@ const battle = (noOfTeamMembers) => {
 
 
 
-(function (){
+(function () {
   console.log('run');
   const gameHtmlWrapper = document.querySelector('#game-wrapper-one');
   const gameController = new GameController(gameHtmlWrapper);
+  gameController.controlPanel.startBattleButton.addEventListener('click', () => {
+    battle(noTeamMembers);
+  })
   console.log('gameController ', gameController);
-
-  // battle(noTeamMembers);
+  gameController.controlPanel.randomPersonButton.addEventListener('click', () => {
+    const personClass = Math.random() > 0.5 ? Hero : Criminal;
+    const member = new personClass(minMaxHP.minHP, minMaxHP.maxHP);
+    const weapon = weaponDraw();
+    member.setWeapon(weapon);
+    console.log('member', member);
+  })
 
 })();
-
 
 
 

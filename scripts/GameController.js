@@ -1,3 +1,8 @@
+import { Criminal, Hero } from "./Character.js";
+import { between } from "./main.js";
+import { weaponDraw } from "./Weapon.js";
+
+
 export class GameController {
 
     constructor(gameHtmlWrapper) {
@@ -29,8 +34,39 @@ class GameControlPanel {
         this.gamePanel = gamePanelHtml;
 
         this.nameInput = this.gamePanel.querySelector('#name');
+        this.strengthInput = this.gamePanel.querySelector('#strength')
+        this.weaponInput = this.gamePanel.querySelector('#weapon')
+        this.teamSelect = this.gamePanel.querySelector('#default_select')
+
 
         this.randomPersonButton = this.gamePanel.querySelector('#randomPerson');
         this.startBattleButton = this.gamePanel.querySelector('#startBattle')
+
+        this.randomPersonButton.addEventListener('click', () => {
+            const newMember = this.drawPerson();
+            this.setInputs(newMember);
+        })
+
     }
+
+    drawPerson() {
+        const personClass = Math.random() > 0.5 ? Hero : Criminal;
+        const minMaxHP = {
+            HP: between(120, 250),
+            strength: between(50, 80),
+        };
+        const member = new personClass(minMaxHP.HP, minMaxHP.strength);
+        const weapon = weaponDraw();
+        member.setWeapon(weapon);
+        return member;
+    }
+
+    setInputs = (member) => {
+        this.nameInput.value = member.name
+        this.strengthInput.value = member.strength
+        this.weaponInput.value = member.weapon.name
+        this.teamSelect.value = Math.random() > 0.5 ? 0 : 1
+    }
+
 }
+

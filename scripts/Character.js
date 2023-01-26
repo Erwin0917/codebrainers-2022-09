@@ -24,9 +24,9 @@ class Character {
       victim.hitPoints = victim.hitPoints - currentDamage;
       const newVictimStrenth = victim.strength - between(1, 50)
       //victim.strength = newVictimStrenth < 1 ?  1 : newVictimStrenth;
-      victim.strength = 
-        newVictimStrenth < 1 
-          ?  1 
+      victim.strength =
+        newVictimStrenth < 1
+          ? 1
           : newVictimStrenth;
 
       return;
@@ -45,11 +45,13 @@ class Character {
 export class Hero extends Character {
   constructor(hitPoints, strength) {
     super(hitPoints, strength);
+    this.name = 'Hero'
   }
 }
 
 export class Criminal extends Character {
   constructor(hitPoints, strength) {
     super(hitPoints, strength);
+    this.name = 'Criminal'
   }
 }

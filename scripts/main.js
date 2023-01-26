@@ -1,5 +1,6 @@
 import { Criminal, Hero } from "./Character.js";
-import { Weapon, weaponDraw } from "./Weapon.js";
+import { weaponDraw } from "./Weapon.js";
+import { GameController } from './GameController.js';
 
 const noTeamMembers = 5;
 
@@ -7,8 +8,6 @@ const minMaxHP = {
   minHP: between(120, 250),
   maxHP: between(50, 80),
 };
-
-//TODO: Ustaw nową broń przy tworzeniu postaniu, wykorzystaj ją podczas walki.
 
 export function between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -33,7 +32,6 @@ const drawTeams = (noOfTeamMembers, name) => {
   for (let i = 0; i < noOfTeamMembers; i++) {
     const member = new name(minMaxHP.minHP, minMaxHP.maxHP);
     const weapon = weaponDraw();
-    console.log("weapon", weapon);
     member.setWeapon(weapon);
     tempTeam.push(member);
   }
@@ -61,20 +59,18 @@ const battle = (noOfTeamMembers) => {
   console.log(criminalTeam);
 };
 
-const search = document.querySelector('#search');
-search.addEventListener('change', (event) => {
-  console.log('event ', event);
-  // event.target.value
-  console.log('event.target.value ', event.target.value);
-});
 
-const newText = 'abc'
-document.querySelector('.someOtherClass').innerHTML = `
-    <h1>${newText}</h1>
-    <span></span>
-`
 
-// battle(noTeamMembers);
+
+(function (){
+  console.log('run');
+  const gameHtmlWrapper = document.querySelector('#game-wrapper-one');
+  const gameController = new GameController(gameHtmlWrapper);
+  console.log('gameController ', gameController);
+
+  // battle(noTeamMembers);
+
+})();
 
 
 

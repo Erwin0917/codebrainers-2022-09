@@ -14,7 +14,6 @@ export class Weapon {
 export const weaponDraw = () => {
   const weaponsList = ["hatchet", "hammer", "sword"];
   const weaponAssigned = weaponsList[between(0, weaponsList.length - 1)];
-  console.log("weaponAssigned", weaponAssigned);
 
   switch (weaponAssigned) {
     case "hatchet":

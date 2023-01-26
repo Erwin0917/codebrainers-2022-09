@@ -13,13 +13,11 @@
     <link rel='stylesheet' href='./style/main.css'>
 </head>
 <body>
-<div class='gameOne'>
-
-
-    <div class='gameBoard'>
+<div class='gameOne' id='game-wrapper-one'>
+    <div class='gameBoard' id='gameBoard'>
         <div class='nes-container with-title is-centered'>
             <p class='title'>Team A</p>
-            <div id='team-a-wrapper' class='nes-container is-rounded'>
+            <div id='team-wrapper-a' class='nes-container is-rounded'>
                 <div class='personWrapper'>
                     <div class='avatar'></div>
                     <div class='personName'>Name</div>
@@ -33,7 +31,8 @@
 
         <div class='nes-container with-title is-centered'>
             <p class='title'>Team B</p>
-             <div class='personWrapper'>
+            <div id='team-wrapper-b' class='nes-container is-rounded'>
+                <div class='personWrapper'>
                     <div class='avatar'></div>
                     <div class='personName'>Name</div>
                     <div class='personWeapon'>Weapon name</div>
@@ -41,13 +40,11 @@
                     <div class='personHitPoints'>Hit points 100/100</div>
                     <progress class='nes-progress is-error' value='10' max='100'></progress>
                 </div>
-            <div id='team-b-wrapper' class='nes-container is-rounded'>
-
             </div>
         </div>
     </div>
 
-    <div class='gameControlWrapper'>
+    <div class='gameControlWrapper' id='gameControlWrapper'>
         <div class='inputsWrapper'>
             <div class='nes-field'>
                 <label for='name'>Name</label>

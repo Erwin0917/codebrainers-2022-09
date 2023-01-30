@@ -1,6 +1,9 @@
-import { Criminal, Hero } from './Character.js';
+import { Criminal, Hero } from "./Character.js";
+import { weaponDraw } from "./Weapon.js";
+import { GameController } from './GameController.js';
 
-//TODO: Ustaw nową broń przy tworzeniu postaniu, wykorzystaj ją podczas walki.
+const noTeamMembers = 5;
+
 
 export function between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -23,7 +26,9 @@ const isTeamDead = (team) => team.every(isMemberDead);
 const drawTeams = (noOfTeamMembers, name) => {
   const tempTeam = [];
   for (let i = 0; i < noOfTeamMembers; i++) {
-    const member = new name(between(80, 100), between(1, 10));
+    const member = new name(minMaxHP.HP, minMaxHP.strength);
+    const weapon = weaponDraw();
+    member.setWeapon(weapon);
     tempTeam.push(member);
   }
   return tempTeam;
@@ -32,9 +37,6 @@ const drawTeams = (noOfTeamMembers, name) => {
 const battle = (noOfTeamMembers) => {
   const heroTeam = drawTeams(noOfTeamMembers, Hero);
   const criminalTeam = drawTeams(noOfTeamMembers, Criminal);
-  console.log("heroTeam before", heroTeam);
-  console.log("criminalTeam Before", criminalTeam);
-
   do {
     heroTeam.forEach((heroInBattle, index) => {
       let criminalInBattle = criminalTeam[index];
@@ -42,13 +44,28 @@ const battle = (noOfTeamMembers) => {
         criminalInBattle = criminalTeam.find((person) => person.isAlive());
       }
       if (criminalInBattle !== undefined) {
-        const opponents = [heroInBattle, criminalInBattle].sort(() => 0.5 - Math.random());
+        const opponents = [heroInBattle, criminalInBattle].sort(
+          () => 0.5 - Math.random()
+        );
         duel(opponents[0], opponents[1]);
       }
     });
   } while ((isTeamDead(heroTeam) || isTeamDead(criminalTeam)) === false);
-  console.log("heroTeam after", heroTeam);
-  console.log("criminalTeam after", criminalTeam);
+  console.log(heroTeam);
+  console.log(criminalTeam);
 };
 
-battle(5);
+
+
+
+(function () {
+  console.log('run');
+  const gameHtmlWrapper = document.querySelector('#game-wrapper-one');
+  const gameController = new GameController(gameHtmlWrapper);
+  gameController.controlPanel.startBattleButton.addEventListener('click', () => {
+    battle(noTeamMembers);
+  })
+  console.log('gameController ', gameController);
+
+})();
+

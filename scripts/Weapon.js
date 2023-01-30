@@ -1,12 +1,28 @@
+import { between } from "./main.js";
+
 export class Weapon {
-  constructor(weaponPower) {
-    this.weaponPower = weaponPower;
+  constructor(name, damage) {
+    this.name = name;
+    this.damage = damage;
+  }
+
+  getDamage() {
+    return this.damage;
   }
 }
 
-const revolver = new Weapon(5);
-const shotgun = new Weapon(7);
-const knife = new Weapon(3);
-const stick = new Weapon(1);
+export const weaponDraw = () => {
+  const weaponsList = ["hatchet", "hammer", "sword"];
+  const weaponAssigned = weaponsList[between(0, weaponsList.length - 1)];
 
-export const weaponsList = [revolver, shotgun, knife, stick];
+  switch (weaponAssigned) {
+    case "hatchet":
+      return new Weapon(weaponAssigned, 20);
+    case "hammer":
+      return new Weapon(weaponAssigned, 10);
+    case "sword":
+      return new Weapon(weaponAssigned, 30);
+    default:
+      throw new Error("No such weapon");
+  }
+};

@@ -29,9 +29,14 @@ class BoardController {
         this.teamB = [];
     }
 
+    // team == 0 - porównanie bez porównania typu
+    // team === 0 - porównanie z porównaniem typów
+    // parseInt(team) === 0 - z porównaniem typów i wartości, ale wtedy string bedzie initem
+    // team === '0' - zero staje sie stringiem i mozna porownac z team bo team jest stringiem
     addMemberToTeam = (member, team) => {
-        team === 0 ? this.teamA.push(member) : this.teamB.push(member);
-        console.log('thisTeams', this.teamA, this.teamB)
+        team == 0 ? this.teamA.push(member) : this.teamB.push(member);
+        console.log('thisTeams', this.teamA, this.teamB);
+        //console.log('team', team, typeof(team))
     }
 
 }
@@ -52,17 +57,22 @@ class GameControlPanel {
 
         this.newMember = null
 
+
         this.randomPersonButton.addEventListener('click', () => {
             this.newMember = this.drawPerson();
             this.setInputs(this.newMember);
 
         })
+
+        // Wylosowanie nowej postaci po dodaniu aktualnej do teamu
         this.addToTeamButton.addEventListener('click', () => {
             if (this.newMember !== null) {
                 addToTeamCallback(this.newMember, this.teamSelect.value);
             }
+            this.newMember = this.drawPerson();
+            this.setInputs(this.newMember);
         })
-        
+
     }
 
     drawPerson() {
@@ -85,4 +95,3 @@ class GameControlPanel {
     }
 
 }
-

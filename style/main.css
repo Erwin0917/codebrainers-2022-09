@@ -1,0 +1,57 @@
+body {
+    padding: 25px;
+}
+
+.gameControlWrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inputsWrapper {
+    width: 100%;
+    display: flex;
+}
+
+.nes-field {
+    margin: 10px;
+}
+
+.buttonsWrapper {
+    margin: 10px;
+}
+
+.nes-btn {
+    margin-right: 10px;
+}
+
+.gameBoard {
+    width: 100%;
+    display: flex;
+}
+
+.gameBoard .nes-container.with-title {
+    width: 50%;
+}
+
+.is-error {
+    size: 5px;
+}
+
+.personWrapper {
+    margin: 5px 0;
+    border-bottom: 2px solid black;
+    padding: 0 10px;
+}
+
+.nes-dialog {
+    /*display: block;*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.gameOne {
+    position: relative;
+}

@@ -4,9 +4,20 @@ import { weaponDraw } from "./Weapon.js";
 
 // TODO: dlaczego do jednego teamu dodaje
 
-// TODO: jeśli add to team to niech sie pola przelosuja albo wyczyszcza
+const duel = (attacker, victim) => {
+    do {
+      if (attacker.isAlive() && victim.isAlive()) {
+        attacker.attack(victim);
+      }
+      if (victim.isAlive() && attacker.isAlive()) {
+        victim.attack(attacker);
+      }
+    } while (victim.isAlive() && attacker.isAlive());
+  };
 
-// TODO: wyrenderowac gostka na widoku
+const isMemberDead = (member) => member.isAlive() === false;
+const isTeamDead = (team) => team.every(isMemberDead);
+
 export class GameController {
   constructor(gameHtmlWrapper) {
     this.gameWrapper = gameHtmlWrapper;
@@ -22,8 +33,27 @@ export class GameController {
         gameHtmlWrapper.querySelector("#gameControlWrapper"),
         this.boardController.addMemberToTeam
       );
+      this.controlPanel.startBattleButton.addEventListener('click',this.battle)
     }
   }
+  battle = () => {
+    do {
+      this.boardController.teamA.forEach((heroInBattle, index) => {
+        let criminalInBattle = this.boardController.teamB[index];
+        if (criminalInBattle.isAlive() === false) {
+          criminalInBattle = this.boardController.teamB.find((person) => person.isAlive());
+        }
+        if (criminalInBattle !== undefined) {
+          const opponents = [heroInBattle, criminalInBattle].sort(
+            () => 0.5 - Math.random()
+          );
+          duel(opponents[0], opponents[1]);
+        }
+      });
+    } while ((isTeamDead(this.boardController.teamA) || isTeamDead(this.boardController.teamB)) === false);
+    console.log(this.boardController.teamA);
+    console.log(this.boardController.teamB);
+  };
 }
 
 class BoardController {

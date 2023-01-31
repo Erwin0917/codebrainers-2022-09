@@ -29,10 +29,7 @@ export class GameController {
     }
 
     if (gameHtmlWrapper.querySelector("#gameControlWrapper")) {
-      this.controlPanel = new GameControlPanel(
-        gameHtmlWrapper.querySelector("#gameControlWrapper"),
-        this.boardController.addMemberToTeam
-      );
+      this.controlPanel = new GameControlPanel(gameHtmlWrapper.querySelector("#gameControlWrapper"),this.boardController.addMemberToTeam);
       this.controlPanel.startBattleButton.addEventListener('click',this.battle)
     }
   }
@@ -66,6 +63,7 @@ class BoardController {
   }
 
   createPersonCard = (member) => {
+    console.log('member: ', member)
     if (member instanceof Character === false) {
       console.error("member not instance of Character");
       return;
@@ -74,7 +72,7 @@ class BoardController {
     const personWrapper = document.createElement("div");
     personWrapper.classList.add("personWrapper");
     personWrapper.innerHTML = `
-    <div class='avatar'></div>
+    <div class='avatar'><img src='${member.imageUrl}'></div>
     <div class='personName'>Name: ${member.name}</div>
     <div class='personWeapon'>Weapon: ${member.weapon.name}</div>
     <div class='personStrength'>Strength: ${member.strength}</div>
@@ -124,18 +122,23 @@ class GameControlPanel {
     });
   }
 
-  randomPersonAndSetInputs = () => {
-    this.newMember = this.drawPerson();
+randomPersonAndSetInputs = async () => {
+    this.newMember = await this.drawPerson();
     this.setInputs(this.newMember);
   };
 
-  drawPerson() {
+  async drawPerson() {
+    const characterId = between(1,826)
+    const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
+    const characterData = await response.json()
     const personClass = Math.random() > 0.5 ? Hero : Criminal;
     const minMaxHP = {
       HP: between(120, 250),
       strength: between(50, 80),
     };
     const member = new personClass(minMaxHP.HP, minMaxHP.strength);
+    member.name = characterData.name
+    member.imageUrl = characterData.image
     const weapon = weaponDraw();
     member.setWeapon(weapon);
     return member;
@@ -148,3 +151,4 @@ class GameControlPanel {
     this.teamSelect.value = Math.random() > 0.5 ? 0 : 1;
   };
 }
+

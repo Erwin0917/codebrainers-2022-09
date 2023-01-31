@@ -1,7 +1,7 @@
 import { Weapon } from "./Weapon.js";
 import { between } from "./main.js";
 
-class Character {
+export class Character {
   constructor(hitPoints, strength) {
     this.hitPoints = hitPoints;
     this.strength = strength;
@@ -20,14 +20,11 @@ class Character {
         this.weapon !== null
           ? this.weapon.getDamage() * (this.strength / 10)
           : defaultDamage;
-      console.log('currentDemage', currentDamage)
+      console.log("currentDemage", currentDamage);
       victim.hitPoints = victim.hitPoints - currentDamage;
-      const newVictimStrenth = victim.strength - between(1, 50)
+      const newVictimStrenth = victim.strength - between(1, 50);
       //victim.strength = newVictimStrenth < 1 ?  1 : newVictimStrenth;
-      victim.strength =
-        newVictimStrenth < 1
-          ? 1
-          : newVictimStrenth;
+      victim.strength = newVictimStrenth < 1 ? 1 : newVictimStrenth;
 
       return;
     }
@@ -45,13 +42,13 @@ class Character {
 export class Hero extends Character {
   constructor(hitPoints, strength) {
     super(hitPoints, strength);
-    this.name = 'Hero'
+    this.name = "Hero";
   }
 }
 
 export class Criminal extends Character {
   constructor(hitPoints, strength) {
     super(hitPoints, strength);
-    this.name = 'Criminal'
+    this.name = "Criminal";
   }
 }

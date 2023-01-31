@@ -1,7 +1,7 @@
 import { Weapon } from "./Weapon.js";
 import { between } from "./main.js";
 
-class Character {
+export class Character {
   constructor(hitPoints, strength) {
     this.hitPoints = hitPoints;
     this.strength = strength;

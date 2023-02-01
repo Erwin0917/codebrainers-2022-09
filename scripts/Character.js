@@ -6,11 +6,30 @@ export class Character {
     this.hitPoints = hitPoints;
     this.strength = strength;
     this.weapon = null;
+    this.name = null;
   }
 
   isAlive() {
     return this.hitPoints > 0;
   }
+
+  updateStrength() {
+    let strengthDiv = document.querySelector(`.personWrapper#${this.getClassName()} > .personStrength`);
+    strengthDiv.innerText = `Strength: ${this.strength}`
+  }
+
+  getClassName() {
+    return this.name.replaceAll(' ', '');
+  }
+
+  updateHP() {
+    let hitPointDiv = document.querySelector(`.personWrapper#${this.getClassName()} > .personHitPoints`);
+    hitPointDiv.innerText = `Hit Points: ${this.hitPoints}`
+
+    let progress = document.querySelector(`.personWrapper#${this.getClassName()} > .nes-progress`);
+    progress.setAttribute('value', this.hitPoints);
+  }
+
 
   attack(victim) {
     if (victim instanceof Character) {
@@ -28,7 +47,8 @@ export class Character {
         newVictimStrenth < 1
           ? 1
           : newVictimStrenth;
-
+      victim.updateStrength();
+      victim.updateHP();
       return;
     }
     throw new Error(`(victim) not instance of Character`, victim);

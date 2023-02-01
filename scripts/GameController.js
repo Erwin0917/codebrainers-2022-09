@@ -69,6 +69,7 @@ class BoardController {
 
     const personWrapper = document.createElement("div");
     personWrapper.classList.add("personWrapper");
+    personWrapper.setAttribute('id', member.getClassName());
     personWrapper.innerHTML = `
     <div class='avatar'><img src='${member.imageUrl}'></div>
     <div class='personName'>Name: ${member.name}</div>

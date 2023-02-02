@@ -46,6 +46,8 @@ export class GameController {
           );
           duel(opponents[0], opponents[1]);
         }
+
+        this.boardController.updateTeamsView();
       });
     } while ((isTeamDead(this.boardController.teamA) || isTeamDead(this.boardController.teamB)) === false);
     console.log(this.boardController.teamA);
@@ -92,6 +94,26 @@ class BoardController {
       this.teamWrapperB.appendChild(personCard);
     }
   };
+
+  updateTeamsView = () => {
+    this.clearTeamWrapper(this.teamWrapperA);
+    this.clearTeamWrapper(this.teamWrapperB);
+
+    const newTeamAView = this.createTeamView(this.teamA);
+    const newTeamBView = this.createTeamView(this.teamB);
+
+    newTeamAView.forEach(memberCard => this.teamWrapperA.appendChild(memberCard));
+    newTeamBView.forEach(memberCard => this.teamWrapperB.appendChild(memberCard));
+  }
+
+  createTeamView = (team) => {
+    return team.map(member => this.createPersonCard(member));
+  }
+
+  clearTeamWrapper = (teamWrapper) => {
+    teamWrapper.innerHTML = '';
+  }
+
 }
 
 class GameControlPanel {

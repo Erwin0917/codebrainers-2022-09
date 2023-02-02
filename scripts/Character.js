@@ -6,6 +6,7 @@ export class Character {
     this.hitPoints = hitPoints;
     this.strength = strength;
     this.weapon = null;
+    this.startingHitPoints = hitPoints;
   }
 
   isAlive() {
@@ -20,7 +21,6 @@ export class Character {
         this.weapon !== null
           ? this.weapon.getDamage() * (this.strength / 10)
           : defaultDamage;
-      console.log("currentDemage", currentDamage);
       victim.hitPoints = victim.hitPoints - currentDamage;
       const newVictimStrenth = victim.strength - between(1, 50);
       //victim.strength = newVictimStrenth < 1 ?  1 : newVictimStrenth;

@@ -2,18 +2,20 @@ import { Criminal, Hero, Character } from "./Character.js";
 import { between } from "./main.js";
 import { weaponDraw } from "./Weapon.js";
 
-// TODO: dlaczego do jednego teamu dodaje
+const timeout = async (time) => {
+  return await new Promise((resolve) => {
+    setTimeout(() => resolve(), time);
+  });
+};
 
 const duel = (attacker, victim) => {
-    do {
-      if (attacker.isAlive() && victim.isAlive()) {
-        attacker.attack(victim);
-      }
-      if (victim.isAlive() && attacker.isAlive()) {
-        victim.attack(attacker);
-      }
-    } while (victim.isAlive() && attacker.isAlive());
-  };
+  if (attacker.isAlive() && victim.isAlive()) {
+    attacker.attack(victim);
+  }
+  if (victim.isAlive() && attacker.isAlive()) {
+    victim.attack(attacker);
+  }
+};
 
 const isMemberDead = (member) => member.isAlive() === false;
 const isTeamDead = (team) => team.every(isMemberDead);
@@ -29,16 +31,24 @@ export class GameController {
     }
 
     if (gameHtmlWrapper.querySelector("#gameControlWrapper")) {
-      this.controlPanel = new GameControlPanel(gameHtmlWrapper.querySelector("#gameControlWrapper"),this.boardController.addMemberToTeam);
-      this.controlPanel.startBattleButton.addEventListener('click',this.battle)
+      this.controlPanel = new GameControlPanel(
+        gameHtmlWrapper.querySelector("#gameControlWrapper"),
+        this.boardController.addMemberToTeam
+      );
+      this.controlPanel.startBattleButton.addEventListener(
+        "click",
+        this.battle
+      );
     }
   }
-  battle = () => {
+  battle = async () => {
     do {
       this.boardController.teamA.forEach((heroInBattle, index) => {
         let criminalInBattle = this.boardController.teamB[index];
         if (criminalInBattle.isAlive() === false) {
-          criminalInBattle = this.boardController.teamB.find((person) => person.isAlive());
+          criminalInBattle = this.boardController.teamB.find((person) =>
+            person.isAlive()
+          );
         }
         if (criminalInBattle !== undefined) {
           const opponents = [heroInBattle, criminalInBattle].sort(
@@ -49,7 +59,11 @@ export class GameController {
 
         this.boardController.updateTeamsView();
       });
-    } while ((isTeamDead(this.boardController.teamA) || isTeamDead(this.boardController.teamB)) === false);
+      await timeout(100);
+    } while (
+      (isTeamDead(this.boardController.teamA) ||
+        isTeamDead(this.boardController.teamB)) === false
+    );
     console.log(this.boardController.teamA);
     console.log(this.boardController.teamB);
   };
@@ -65,7 +79,6 @@ class BoardController {
   }
 
   createPersonCard = (member) => {
-    console.log('member: ', member)
     if (member instanceof Character === false) {
       console.error("member not instance of Character");
       return;
@@ -79,7 +92,7 @@ class BoardController {
     <div class='personWeapon'>Weapon: ${member.weapon.name}</div>
     <div class='personStrength'>Strength: ${member.strength}</div>
     <div class='personHitPoints'>Hit Points: ${member.hitPoints}</div>
-    <progress class='nes-progress is-error' value='${member.hitPoints}' max='${member.hitPoints}'></progress>
+    <progress class='nes-progress is-error' value='${member.hitPoints}' max='${member.startingHitPoints}'></progress>
     `;
     return personWrapper;
   };
@@ -102,18 +115,21 @@ class BoardController {
     const newTeamAView = this.createTeamView(this.teamA);
     const newTeamBView = this.createTeamView(this.teamB);
 
-    newTeamAView.forEach(memberCard => this.teamWrapperA.appendChild(memberCard));
-    newTeamBView.forEach(memberCard => this.teamWrapperB.appendChild(memberCard));
-  }
+    newTeamAView.forEach((memberCard) =>
+      this.teamWrapperA.appendChild(memberCard)
+    );
+    newTeamBView.forEach((memberCard) =>
+      this.teamWrapperB.appendChild(memberCard)
+    );
+  };
 
   createTeamView = (team) => {
-    return team.map(member => this.createPersonCard(member));
-  }
+    return team.map((member) => this.createPersonCard(member));
+  };
 
   clearTeamWrapper = (teamWrapper) => {
-    teamWrapper.innerHTML = '';
-  }
-
+    teamWrapper.innerHTML = "";
+  };
 }
 
 class GameControlPanel {
@@ -144,23 +160,25 @@ class GameControlPanel {
     });
   }
 
-randomPersonAndSetInputs = async () => {
+  randomPersonAndSetInputs = async () => {
     this.newMember = await this.drawPerson();
     this.setInputs(this.newMember);
   };
 
   async drawPerson() {
-    const characterId = between(1,826)
-    const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
-    const characterData = await response.json()
+    const characterId = between(1, 826);
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character/${characterId}`
+    );
+    const characterData = await response.json();
     const personClass = Math.random() > 0.5 ? Hero : Criminal;
     const minMaxHP = {
-      HP: between(120, 250),
+      HP: between(250, 500),
       strength: between(50, 80),
     };
     const member = new personClass(minMaxHP.HP, minMaxHP.strength);
-    member.name = characterData.name
-    member.imageUrl = characterData.image
+    member.name = characterData.name;
+    member.imageUrl = characterData.image;
     const weapon = weaponDraw();
     member.setWeapon(weapon);
     return member;
@@ -173,4 +191,3 @@ randomPersonAndSetInputs = async () => {
     this.teamSelect.value = Math.random() > 0.5 ? 0 : 1;
   };
 }
-

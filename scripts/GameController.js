@@ -33,7 +33,8 @@ export class GameController {
     if (gameHtmlWrapper.querySelector("#gameControlWrapper")) {
       this.controlPanel = new GameControlPanel(
         gameHtmlWrapper.querySelector("#gameControlWrapper"),
-        this.boardController.addMemberToTeam
+        this.boardController.addMemberToTeam,
+        this.clearLocalStorage
       );
       this.controlPanel.startBattleButton.addEventListener(
         "click",
@@ -67,6 +68,13 @@ export class GameController {
     console.log(this.boardController.teamA);
     console.log(this.boardController.teamB);
   };
+
+  clearLocalStorage = () => {
+    localStorage.clear();
+    this.boardController.teamA = [];
+    this.boardController.teamB = [];
+    this.boardController.updateTeamsView();
+  }
 }
 
 class BoardController {
@@ -102,9 +110,12 @@ class BoardController {
     if (team === "0") {
       this.teamA.push(member);
       this.teamWrapperA.appendChild(personCard);
+      localStorage.setItem('teamA', JSON.stringify(this.teamA));
     } else {
       this.teamB.push(member);
       this.teamWrapperB.appendChild(personCard);
+      localStorage.setItem('teamB', JSON.stringify(this.teamB));
+
     }
   };
 
@@ -133,7 +144,7 @@ class BoardController {
 }
 
 class GameControlPanel {
-  constructor(gamePanelHtml, addToTeamCallback) {
+  constructor(gamePanelHtml, addToTeamCallback, clearLocalStorageCallback) {
     this.gamePanel = gamePanelHtml;
 
     this.nameInput = this.gamePanel.querySelector("#name");
@@ -144,6 +155,7 @@ class GameControlPanel {
     this.randomPersonButton = this.gamePanel.querySelector("#randomPerson");
     this.startBattleButton = this.gamePanel.querySelector("#startBattle");
     this.addToTeamButton = this.gamePanel.querySelector("#addToTeam");
+    this.clearLocalStorageButton = this.gamePanel.querySelector('#clearLocalStorage');
 
     this.newMember = null;
 
@@ -158,6 +170,8 @@ class GameControlPanel {
       }
       this.randomPersonAndSetInputs();
     });
+
+    this.clearLocalStorageButton.addEventListener("click", clearLocalStorageCallback);
   }
 
   randomPersonAndSetInputs = async () => {

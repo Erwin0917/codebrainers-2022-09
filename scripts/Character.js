@@ -3,6 +3,7 @@ import { between } from "./main.js";
 
 export class Character {
   constructor(hitPoints, strength) {
+    this.id = Date.now();
     this.hitPoints = hitPoints;
     this.strength = strength;
     this.weapon = null;
